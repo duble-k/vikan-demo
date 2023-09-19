@@ -1,23 +1,45 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
+import { AppBar, Toolbar, Button, IconButton, Typography, Divider } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { Home as HomeIcon, Search as SearchIcon, Person as PersonIcon, Dashboard as DashboardIcon } from '@mui/icons-material';
 
-const NavBar = ({isAdmin}) => {
+
+const NavBar = ({setToken, token, isAdmin}) => {
+
+  const handleLogInOrOut = () => {
+    if(token)
+    {
+      setToken(null);
+    }
+  };
+
   return (
     <AppBar position="static">
       <Toolbar>
-        <Button color="inherit" component={Link} to="/">
-          Login
+      <Typography variant="h6">
+          Vikan Demo
+        </Typography>
+        <Divider orientation="vertical" flexItem sx={{ mx: 2, backgroundColor: 'white' }} />
+        <IconButton edge="start" component={Link} to="/" color="inherit" aria-label="home">
+            <HomeIcon />
+        </IconButton>
+        <Button color="inherit" component={Link} to="/login" onClick={handleLogInOrOut}>
+          <PersonIcon />
+          {token ? "Logout" : "Login"}
         </Button>
-        <Button color="inherit" component={Link} to="/lookup">
-          Lookup
-        </Button>
-        {isAdmin && (
-          <Button color="inherit" component={Link} to="/admin">
-            Admin
-          </Button>
+        { token && (
+          <>
+            <Button color="inherit" component={Link} to="/lookup">
+              <SearchIcon />
+              Lookup
+            </Button>
+            { isAdmin && (
+              <Button color="inherit" component={Link} to="/admin">
+                <DashboardIcon />
+                Admin
+              </Button>
+            )}
+          </>
         )}
       </Toolbar>
     </AppBar>

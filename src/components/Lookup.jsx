@@ -12,11 +12,11 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  Button,
-  Popper
+  Button
 } from '@mui/material';
 import noImage from '../images/default.jpg';
 import fetchCountryInfo from '../api/fetchCountryInfo'
+import fetchCountryNames from '../api/fetchCountryNames';
 
 const Lookup = ({ token }) => {
   const [searchInput, setSearchInput] = useState('');
@@ -25,26 +25,16 @@ const Lookup = ({ token }) => {
 
   useEffect(() => {
     // Make a GET request to your server's /api/countries route
-    fetch('https://vikan-server.onrender.com/api/names', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-       'Content-Type': 'application/json',
-     }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the state with the list of countries
-        setCountries(data.countries);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching country names:', error);
-      });
-  }, []); // The empty dependency array ensures this runs only once on component mount
+    const getNames = async () => {
+      let countryNames = await fetchCountryNames(token);
+      setCountries(countryNames);
+    };
+    getNames();
+  }, [token]); // The empty dependency array ensures this runs only once on component mount
 
 
   const handleSearch = async () => {
-    
+    //TODO: add error handling
     const result = await fetchCountryInfo({countryName: searchInput}, token)
     setCountryInfo(result);
   };
