@@ -3,6 +3,7 @@ import { AppBar, Box, Container, Paper, Tab, Tabs, Typography } from '@mui/mater
 import Upload from './AdminPanel/Upload';
 import Update from './AdminPanel/Update';
 import Delete from './AdminPanel/Delete'
+import fetchCountryNames from '../api/fetchCountryNames';
 
 const Admin = ({ token }) => {
   const [value, setValue] = useState(0); // To control the selected tab
@@ -14,21 +15,11 @@ const Admin = ({ token }) => {
 
   useEffect(() => {
     // Make a GET request to your server's /api/countries route
-    fetch('http://localhost:8080/api/names', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-       'Content-Type': 'application/json',
-     }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the state with the list of countries
-        setCountries(data.countries);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching country names:', error);
-      });
+    const getNames = async () => {
+      let countryNames = await fetchCountryNames(token);
+      setCountries(countryNames);
+    }
+    getNames();
   }, [token]); // The empty dependency array ensures this runs only once on component mount
 
   return (
