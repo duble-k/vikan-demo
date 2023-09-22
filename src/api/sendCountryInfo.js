@@ -1,6 +1,6 @@
 const sendCountryInfo = async (input, token) => {
     try {
-      const response = await fetch(`${process.env.serverUrl}/api/upload`, {
+      const response = await fetch(`${process.env.REACT_APP_serverUrl}/api/upload`, {
         method: 'POST',
         headers: {
            Authorization: `Bearer ${token}`,

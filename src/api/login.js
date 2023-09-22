@@ -1,6 +1,6 @@
 const login = async (username, password) => {
     try {
-        const response = await fetch(`${process.env.serverUrl}/api/authenticate`, {
+        const response = await fetch(`${process.env.REACT_APP_serverUrl}/api/authenticate`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

@@ -1,6 +1,6 @@
 const deleteCountryInfo = async (country, token) => {
     try {
-      const response = await fetch(`${process.env.serverUrl}/api/delete`, {
+      const response = await fetch(`${process.env.REACT_APP_serverUrl}/api/delete`, {
         method: 'POST',
         headers: {
            Authorization: `Bearer ${token}`,

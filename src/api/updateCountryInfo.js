@@ -2,7 +2,7 @@
   const updateCountryInfo = async (token, body) => {
     console.log(body)
     try {
-      const response = await fetch(`${process.env.serverUrl}/api/update`, {
+      const response = await fetch(`${process.env.REACT_APP_serverUrl}/api/update`, {
         method: 'PUT',
         headers: {
            Authorization: `Bearer ${token}`,
