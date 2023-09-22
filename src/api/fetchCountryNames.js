@@ -1,6 +1,6 @@
 const fetchCountryNames = async (token) => {
     try {
-      const response = await fetch('https://vikan-server.onrender.com/api/names', {
+      const response = await fetch(`${process.env.serverUrl}/api/names`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

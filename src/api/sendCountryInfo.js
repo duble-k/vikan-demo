@@ -1,6 +1,6 @@
 const sendCountryInfo = async (input, token) => {
     try {
-      const response = await fetch('https://vikan-server.onrender.com/api/upload', {
+      const response = await fetch(`${process.env.serverUrl}/api/upload`, {
         method: 'POST',
         headers: {
            Authorization: `Bearer ${token}`,

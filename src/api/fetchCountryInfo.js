@@ -1,6 +1,6 @@
 const fetchCountryInfo = async (input, token) => {
     try {
-      const response = await fetch('https://vikan-server.onrender.com/api/receive', {
+      const response = await fetch(`${process.env.serverUrl}/api/receive`, {
         method: 'POST',
         headers: {
            Authorization: `Bearer ${token}`,

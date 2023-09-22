@@ -2,7 +2,7 @@
   const updateCountryInfo = async (token, body) => {
     console.log(body)
     try {
-      const response = await fetch(`https://vikan-server.onrender.com/api/update`, {
+      const response = await fetch(`${process.env.serverUrl}/api/update`, {
         method: 'PUT',
         headers: {
            Authorization: `Bearer ${token}`,
