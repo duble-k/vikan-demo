@@ -14,13 +14,12 @@ import {
   CircularProgress
 } from '@mui/material';
 import DeleteConfirmationDialog from './DeletionConfirmationDialog';
-import MessageBanner from '../MessageBanner';
 import noImage from '../../images/default.jpg';
 import fetchCountryInfo from '../../api/fetchCountryInfo';
 import deleteCountryInfo from '../../api/deleteCountryInfo';
 import fetchCountryNames from '../../api/fetchCountryNames';
 
-const Delete = ({ setCountries, countries, token }) => {
+const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries, token }) => {
   const [searchInput, setSearchInput] = useState('');
   const [countryInfo, setCountryInfo] = useState(null); // Store country data
 
@@ -65,17 +64,7 @@ const Delete = ({ setCountries, countries, token }) => {
     setOpen(true);
     handleCloseDeleteDialog();
   };
-    // message banner stuff
-    const [open, setOpen] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('success'); // 'success' or 'error'
 
-  const handleCloseBanner = (event, reason) => {
-    if (reason === 'clickaway') {
-        return;
-    }
-    setOpen(false);
-  };
   // other
   const handleSearch = async () => {
     //TODO: add error handling
@@ -88,12 +77,10 @@ const Delete = ({ setCountries, countries, token }) => {
 
   return (
     <>
-        <MessageBanner
-            open={open}
-            message={message}
-            severity={severity}
-            onClose={handleCloseBanner}
-        />
+        <Typography variant="h6" gutterBottom>
+            Delete Preview
+        </Typography>
+        <Divider />
         <Container maxWidth="md" style={{ paddingTop: '20px'}}>
         <Grid style={{paddingBottom: "20px"}} container spacing={2} alignItems="center">
             <Grid item xs={10}>

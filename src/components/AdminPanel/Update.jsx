@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Button, CircularProgress, Divider, Autocomplete, Grid } from '@mui/material';
-import MessageBanner from '../MessageBanner';
 import updateCountryInfo from '../../api/updateCountryInfo';
 import fetchCountryInfo from '../../api/fetchCountryInfo';
 
-const Update = ({ countries, token }) => {
+const Update = ({ setOpen, setSeverity, setMessage, countries, token }) => {
     const [searchInput, setSearchInput] = useState('');
     const [formData, setFormData] = useState({
         country: '',
@@ -19,23 +18,10 @@ const Update = ({ countries, token }) => {
     // how to indicate loading
     const [isLoading, setIsLoading] = useState(false);
 
-    // message banner stuff
-    const [open, setOpen] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('success'); // 'success' or 'error'
-
-
     const handleSearch = async () => {
 
         const result = await fetchCountryInfo({ countryName: searchInput }, token)
         setFormData(result);
-    };
-
-    const handleCloseBanner = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
     };
 
     // Your fetch function for uploading data will go here
@@ -81,12 +67,6 @@ const Update = ({ countries, token }) => {
 
     return (
         <>
-            <MessageBanner
-                open={open}
-                message={message}
-                severity={severity}
-                onClose={handleCloseBanner}
-            />
             <Typography variant="h6" gutterBottom>
                 Updating
             </Typography>
@@ -111,7 +91,7 @@ const Update = ({ countries, token }) => {
                     />
                 </Grid>
                 <Grid item xs={2}>
-                    <Button variant="outlined" onClick={handleSearch}>
+                    <Button disabled={searchInput === '' || !searchInput} variant="outlined" onClick={handleSearch}>
                         Search
                     </Button>
                 </Grid>
@@ -168,7 +148,7 @@ const Update = ({ countries, token }) => {
                     value={formData.political}
                     onChange={(e) => setFormData({ ...formData, political: e.target.value })}
                 />
-                <Button variant="contained" color="primary" type="submit">
+                <Button disabled={formData.country === '' || (searchInput === '' || !searchInput)} variant="contained" color="primary" type="submit">
                     Update
                 </Button>
                 {isLoading && (

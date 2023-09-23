@@ -1,4 +1,4 @@
-const sendCountryInfo = async (input, token) => {
+const sendCountryInfo = async ( input, token) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_serverUrl}/api/upload`, {
         method: 'POST',
