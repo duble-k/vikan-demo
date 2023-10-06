@@ -1,4 +1,4 @@
-const fetchPdf = async (pdfName, token) => {
+const fetchPdf = async (country, pdfName, token) => {
     try 
     {
         const response = await fetch(`${process.env.REACT_APP_serverUrl}/api/get-pdf`, {
@@ -7,7 +7,7 @@ const fetchPdf = async (pdfName, token) => {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ pdfName }), // Send the PDF name in the request body
+          body: JSON.stringify({ pdfName, country }), // Send the PDF name in the request body
         });
 
         return response;

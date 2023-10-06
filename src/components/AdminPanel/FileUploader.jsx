@@ -27,13 +27,14 @@ const FileUploader = ({ setOpen, setSeverity, setMessage, countries, token }) =>
             const formData = new FormData();
             formData.append('associatedFieldName', searchInput);
             formData.append('pdf', file);
+            console.log(file);
             
             const response = await uploadPdf(formData, token);
             const data = await response.json();
       
             if (response.status === 200) {
                 setSeverity("success");
-                setMessage(`File: ${file?.originalName} successfully uploaded!`);
+                setMessage(`File: ${file?.name} successfully uploaded!`);
                 setOpen(true);
             } else {
                 setSeverity("error");

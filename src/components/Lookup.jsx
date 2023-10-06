@@ -61,7 +61,7 @@ const Lookup = ({ token }) => {
   const handlePdfClick = async (pdfName) => {
     // Make a POST request to your server's /api/get-pdf endpoint with the PDF name
     try {
-      const response = await fetchPdf(pdfName, token);
+      const response = await fetchPdf(searchInput, pdfName, token);
       if (response.ok) {
         // Open the PDF in a new tab or window
         const blob = await response.blob();

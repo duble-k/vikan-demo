@@ -118,7 +118,7 @@ const Create = ({ setOpen, setSeverity, setMessage, setCountries, token}) => {
           value={formData.political}
           onChange={(e) => setFormData({...formData, political: e.target.value})}
         />
-        <Button disabled={formData.country} variant="contained" color="primary" type="submit">
+        <Button disabled={!formData.country} variant="contained" color="primary" type="submit">
           Submit
         </Button>
         {isLoading && (
