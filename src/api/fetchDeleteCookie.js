@@ -1,7 +1,7 @@
-const fetchCountryNames = async () => {
+const fetchDeleteCookie = async () => {
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_serverUrl}/api/names`,
+      `${process.env.REACT_APP_serverUrl}/api/delete-cookie`,
       {
         credentials: "include",
         headers: {
@@ -9,17 +9,12 @@ const fetchCountryNames = async () => {
         },
       }
     );
-
-    if (!response.ok) {
-      throw new Error("Error fetching country names");
-    }
-
     const data = await response.json();
-    return data.countries;
+    return data.message;
   } catch (error) {
-    console.error("Error fetching country names:", error);
+    console.log("error logging out: ", error)
     throw error; // Re-throw the error to be caught higher up the call stack
   }
 };
 
-export default fetchCountryNames;
+export default fetchDeleteCookie;
