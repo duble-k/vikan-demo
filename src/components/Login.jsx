@@ -11,13 +11,16 @@ import {
 } from "@mui/material";
 import login from "../api/login";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useSessionStorageContext } from "../SessionStorageContext";
 
-const Login = ({ setAdmin }) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { updateSessionData } = useSessionStorageContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,10 +33,8 @@ const Login = ({ setAdmin }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Login was successful, set the token
-
-        setAdmin(data.role === "admin");
-
+        // Login was successful, set state accordingly
+        updateSessionData({ isAdmin: data.role === "admin", hasCookie: true });
         setError("");
         navigate("/lookup");
       } else {

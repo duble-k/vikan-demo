@@ -22,7 +22,7 @@ import fetchCountryNames from "../api/fetchCountryNames";
 import fetchPdf from "../api/fetchPdf";
 
 const Lookup = () => {
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState(null);
   const [countryInfo, setCountryInfo] = useState(null); // Store country data
   const [countries, setCountries] = useState([]);
   const [open, setOpen] = useState(false);

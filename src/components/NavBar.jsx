@@ -15,19 +15,19 @@ import {
   Dashboard as DashboardIcon,
 } from "@mui/icons-material";
 import "./styles.css";
-import fetchDeleteCookies from "../api/fetchDeleteCookies";
+import fetchDeleteCookie from "../api/fetchDeleteCookie";
+import { useSessionStorageContext } from "../SessionStorageContext";
 
-const NavBar = ({ isAdmin }) => {
+const NavBar = () => {
+
+  const {isAdmin, hasCookie, updateSessionData} = useSessionStorageContext();
+
   const location = useLocation();
 
-  const cookieExists = () => {
-    const hasCookie = document.cookie.includes("userToken");
-    return hasCookie;
-  };
-
-  const handleLogInOrOut = () => {
-    if (cookieExists) {
-      fetchDeleteCookies();
+  const handleLogInOrOut = async () => {
+    if (hasCookie) {
+      await fetchDeleteCookie();
+      updateSessionData({ isAdmin: false, hasCookie: false });
     }
   };
 
@@ -53,7 +53,7 @@ const NavBar = ({ isAdmin }) => {
           <HomeIcon />
         </IconButton>
 
-        {cookieExists && (
+        {hasCookie && (
           <>
             <Button
               className={location.pathname === "/lookup" ? "active-button" : ""}
@@ -89,7 +89,7 @@ const NavBar = ({ isAdmin }) => {
           onClick={handleLogInOrOut}
         >
           <PersonIcon />
-          {cookieExists ? "Logout" : "Login"}
+          {hasCookie ? "Logout" : "Login"}
         </Button>
       </Toolbar>
     </AppBar>
