@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
-import { Typography, TextField, Button, CircularProgress, Divider } from '@mui/material';
-import sendCountryInfo from '../../api/sendCountryInfo';
-import fetchCountryNames from '../../api/fetchCountryNames';
+import React, { useState } from "react";
+import {
+  Typography,
+  TextField,
+  Button,
+  CircularProgress,
+  Divider,
+} from "@mui/material";
+import sendCountryInfo from "../../api/sendCountryInfo";
+import fetchCountryNames from "../../api/fetchCountryNames";
 
-const Create = ({ setOpen, setSeverity, setMessage, setCountries, token}) => {
+const Create = ({ setOpen, setSeverity, setMessage, setCountries }) => {
   // Define state variables for form inputs
   const [formData, setFormData] = useState({
-    country: '',
-    founded: '',
-    population: '',
-    political: '',
-    currency: '',
-    image: '',
+    country: "",
+    founded: "",
+    population: "",
+    political: "",
+    currency: "",
+    image: "",
   });
 
-  const [imageData, setImageData] = useState(''); // Store the base64 encoded image data
+  const [imageData, setImageData] = useState(""); // Store the base64 encoded image data
   // how to indicate loading
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,28 +39,25 @@ const Create = ({ setOpen, setSeverity, setMessage, setCountries, token}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const response = await sendCountryInfo({...formData, image: imageData}, token);
+    const response = await sendCountryInfo({ ...formData, image: imageData });
     let data = await response.json();
     setIsLoading(false);
-    console.log(response)
-    if (response.status !== 201)
-    {
+    console.log(response);
+    if (response.status !== 201) {
       setSeverity("error");
-    }
-    else
-    {
+    } else {
       setSeverity("success");
       setFormData({
-        country: '',
-        founded: '',
-        population: '',
-        political: '',
-        currency: '',
-        image: '',
+        country: "",
+        founded: "",
+        population: "",
+        political: "",
+        currency: "",
+        image: "",
       });
       setImageData(null);
     }
-    const newCountyNames = await fetchCountryNames(token);
+    const newCountyNames = await fetchCountryNames();
     setCountries(newCountyNames);
     setMessage(data.message);
     setOpen(true);
@@ -67,15 +70,21 @@ const Create = ({ setOpen, setSeverity, setMessage, setCountries, token}) => {
       </Typography>
       <Divider />
       <form onSubmit={handleSubmit}>
-        <div style={{ paddingTop: "10px", display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="imagePicker" style={{ marginBottom: '8px' }}>
-              Image (PNG or JPG)
+        <div
+          style={{
+            paddingTop: "10px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <label htmlFor="imagePicker" style={{ marginBottom: "8px" }}>
+            Image (PNG or JPG)
           </label>
           <input
-              type="file"
-              id="imagePicker"
-              accept=".jpg, .jpeg, .png"
-              onChange={handleImageFileChange}
+            type="file"
+            id="imagePicker"
+            accept=".jpg, .jpeg, .png"
+            onChange={handleImageFileChange}
           />
         </div>
         <TextField
@@ -84,7 +93,9 @@ const Create = ({ setOpen, setSeverity, setMessage, setCountries, token}) => {
           fullWidth
           margin="normal"
           value={formData.country}
-          onChange={(e) => setFormData({...formData, country: e.target.value})}
+          onChange={(e) =>
+            setFormData({ ...formData, country: e.target.value })
+          }
         />
         <TextField
           label="Population"
@@ -92,7 +103,9 @@ const Create = ({ setOpen, setSeverity, setMessage, setCountries, token}) => {
           fullWidth
           margin="normal"
           value={formData.population}
-          onChange={(e) => setFormData({...formData, population: e.target.value})}
+          onChange={(e) =>
+            setFormData({ ...formData, population: e.target.value })
+          }
         />
         <TextField
           label="Currency"
@@ -100,7 +113,9 @@ const Create = ({ setOpen, setSeverity, setMessage, setCountries, token}) => {
           fullWidth
           margin="normal"
           value={formData.currency}
-          onChange={(e) => setFormData({...formData, currency: e.target.value})}
+          onChange={(e) =>
+            setFormData({ ...formData, currency: e.target.value })
+          }
         />
         <TextField
           label="Founded"
@@ -108,7 +123,9 @@ const Create = ({ setOpen, setSeverity, setMessage, setCountries, token}) => {
           fullWidth
           margin="normal"
           value={formData.founded}
-          onChange={(e) => setFormData({...formData, founded: e.target.value})}
+          onChange={(e) =>
+            setFormData({ ...formData, founded: e.target.value })
+          }
         />
         <TextField
           label="Political"
@@ -116,13 +133,20 @@ const Create = ({ setOpen, setSeverity, setMessage, setCountries, token}) => {
           fullWidth
           margin="normal"
           value={formData.political}
-          onChange={(e) => setFormData({...formData, political: e.target.value})}
+          onChange={(e) =>
+            setFormData({ ...formData, political: e.target.value })
+          }
         />
-        <Button disabled={!formData.country} variant="contained" color="primary" type="submit">
+        <Button
+          disabled={!formData.country}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
           Submit
         </Button>
         {isLoading && (
-          <div style={{ display: 'flex'}}>
+          <div style={{ display: "flex" }}>
             <span>Submitting...</span>
             <CircularProgress size={20} style={{ marginLeft: 10 }} />
           </div>

@@ -19,7 +19,7 @@ import fetchCountryInfo from '../../api/fetchCountryInfo';
 import deleteCountryInfo from '../../api/deleteCountryInfo';
 import fetchCountryNames from '../../api/fetchCountryNames';
 
-const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries, token }) => {
+const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries}) => {
   const [searchInput, setSearchInput] = useState('');
   const [countryInfo, setCountryInfo] = useState(null); // Store country data
 
@@ -36,7 +36,7 @@ const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries, tok
   const handleDelete = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const response = await deleteCountryInfo(searchInput, token);
+    const response = await deleteCountryInfo(searchInput);
     let data = await response.json();
     setIsLoading(false);
     console.log(response)
@@ -52,7 +52,7 @@ const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries, tok
     }
     try
     {
-        let updatedCountriesNames = await fetchCountryNames(token);
+        let updatedCountriesNames = await fetchCountryNames();
         console.log(updatedCountriesNames);
         setCountries(updatedCountriesNames);
     }
@@ -68,7 +68,7 @@ const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries, tok
   // other
   const handleSearch = async () => {
     //TODO: add error handling
-    const result = await fetchCountryInfo({countryName: searchInput}, token)
+    const result = await fetchCountryInfo({countryName: searchInput})
     setCountryInfo(result);
   };
 

@@ -1,22 +1,25 @@
-  // Function to handle the update submission
-  const updateCountryInfo = async (token, body) => {
-    console.log(body)
-    try {
-      const response = await fetch(`${process.env.REACT_APP_serverUrl}/api/update`, {
-        method: 'PUT',
+// Function to handle the update submission
+const updateCountryInfo = async (body) => {
+  console.log(body);
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_serverUrl}/api/update`,
+      {
+        method: "PUT",
+        credentials: "include",
         headers: {
-           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(body), // Send the updated data as JSON
-      });
-      
-      return response;
-    } catch (error) {
-      // Handle network errors or other exceptions
-      console.error('Error:', error);
-      return {message: "Error"};
-    }
-  };
+      }
+    );
 
-  export default updateCountryInfo;
+    return response;
+  } catch (error) {
+    // Handle network errors or other exceptions
+    console.error("Error:", error);
+    return { message: "Error" };
+  }
+};
+
+export default updateCountryInfo;

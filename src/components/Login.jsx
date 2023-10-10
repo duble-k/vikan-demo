@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Container,
@@ -7,21 +7,21 @@ import {
   TextField,
   Typography,
   Avatar,
-  CircularProgress
-} from '@mui/material';
-import login from '../api/login'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+  CircularProgress,
+} from "@mui/material";
+import login from "../api/login";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-const Login = ({ setAdmin, setToken }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const Login = ({ setAdmin }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true); // Set loading state to true when login is initiated
 
     // Your login function logic here
@@ -31,19 +31,18 @@ const Login = ({ setAdmin, setToken }) => {
 
       if (response.ok) {
         // Login was successful, set the token
-        setToken(data.token);
-        setAdmin(data.role==='admin')
-        setError('');
-        navigate('/lookup');
+
+        setAdmin(data.role === "admin");
+
+        setError("");
+        navigate("/lookup");
       } else {
         // Login failed, display the error message
         setError(data.message);
-        setToken('');
       }
     } catch (error) {
-      console.error('An error occurred:', error);
-      setError('An error occurred while logging in.');
-      setToken('');
+      console.error("An error occurred:", error);
+      setError("An error occurred while logging in.");
     } finally {
       setIsLoading(false);
     }
@@ -53,7 +52,7 @@ const Login = ({ setAdmin, setToken }) => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div>
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -88,7 +87,7 @@ const Login = ({ setAdmin, setToken }) => {
             Sign In
           </Button>
           {isLoading && (
-            <div style={{ display: 'flex'}}>
+            <div style={{ display: "flex" }}>
               <span>Signing in...</span>
               <CircularProgress size={20} style={{ marginLeft: 10 }} />
             </div>
@@ -105,5 +104,3 @@ const Login = ({ setAdmin, setToken }) => {
 };
 
 export default Login;
-
-
