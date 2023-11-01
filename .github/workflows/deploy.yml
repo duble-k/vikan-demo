@@ -22,4 +22,4 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync ./vikan-demo s3://my-react-app
+          aws s3 sync ./build s3://vikan-demo
