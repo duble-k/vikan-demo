@@ -22,19 +22,33 @@ const Login = () => {
 
   const { updateSessionData } = useSessionStorageContext();
 
-  // Function to request storage access
-  const requestStorageAccess = async () => {
-    try {
-      await document.requestStorageAccess();
-    } catch (error) {
-      console.error("Error requesting storage access:", error);
-      throw new Error("Failed to request storage access.");
-    }
-  };
-
+  // cookie storage request
   useEffect(() => {
-    // Request storage access when the component mounts
-    requestStorageAccess();
+    const requestStorageAccess = async () => {
+      try {
+        await document.requestStorageAccess();
+      } catch (error) {
+        console.error("Error requesting storage access:", error);
+        throw new Error("Failed to request storage access.");
+      }
+    };
+  
+    const checkAndRequestStorageAccess = async () => {
+      try {
+        // Check if storage access is already granted
+        const hasStorageAccess = await document.hasStorageAccess();
+  
+        if (!hasStorageAccess) {
+          // Request storage access if it's not already granted
+          await requestStorageAccess();
+        }
+      } catch (error) {
+        console.error("Error checking or requesting storage access:", error);
+      }
+    };
+  
+    // Call the function to check and request storage access
+    checkAndRequestStorageAccess();
   }, []); // Empty dependency array ensures this runs only once
 
   const handleLogin = async (e) => {
