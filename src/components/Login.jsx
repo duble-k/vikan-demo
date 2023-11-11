@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -21,6 +21,21 @@ const Login = () => {
   const navigate = useNavigate();
 
   const { updateSessionData } = useSessionStorageContext();
+
+  // Function to request storage access
+  const requestStorageAccess = async () => {
+    try {
+      await document.requestStorageAccess();
+    } catch (error) {
+      console.error("Error requesting storage access:", error);
+      throw new Error("Failed to request storage access.");
+    }
+  };
+
+  useEffect(() => {
+    // Request storage access when the component mounts
+    requestStorageAccess();
+  }, []); // Empty dependency array ensures this runs only once
 
   const handleLogin = async (e) => {
     e.preventDefault();

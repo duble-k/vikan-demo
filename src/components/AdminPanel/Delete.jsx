@@ -4,7 +4,6 @@ import {
   TextField,
   Autocomplete,
   Grid,
-  CardMedia,
   Typography,
   List,
   ListItem,

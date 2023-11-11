@@ -113,11 +113,13 @@ const Lookup = () => {
                 result={ result }
               />
             )}{" "}
-            {/* Render the Create component when the "Create" tab is selected */}
             {tabValue === 1 && (
               <FormsList
                 name={ result.name }
                 associatedPdfs={ result.associatedPdfs }
+                setOpen={setOpen}
+                setMessage={setMessage}
+                setSeverity={setSeverity}
               />
             )}{" "}
           </Box>
