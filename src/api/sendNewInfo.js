@@ -1,4 +1,4 @@
-const sendCountryInfo = async (input) => {
+const sendNewInfo = async (input) => {
   try {
     const response = await fetch(
       `${process.env.REACT_APP_serverUrl}/api/upload`,
@@ -18,4 +18,4 @@ const sendCountryInfo = async (input) => {
   }
 };
 
-export default sendCountryInfo;
+export default sendNewInfo;

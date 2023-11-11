@@ -1,5 +1,5 @@
 // Function to handle the update submission
-const updateCountryInfo = async (body) => {
+const updateInfo = async (body) => {
   console.log(body);
   try {
     const response = await fetch(
@@ -22,4 +22,4 @@ const updateCountryInfo = async (body) => {
   }
 };
 
-export default updateCountryInfo;
+export default updateInfo;

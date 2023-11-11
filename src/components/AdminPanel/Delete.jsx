@@ -15,13 +15,13 @@ import {
 } from '@mui/material';
 import DeleteConfirmationDialog from './DeletionConfirmationDialog';
 import noImage from '../../images/default.jpg';
-import fetchCountryInfo from '../../api/fetchCountryInfo';
-import deleteCountryInfo from '../../api/deleteCountryInfo';
-import fetchCountryNames from '../../api/fetchCountryNames';
+import fetchInfo from '../../api/fetchInfo';
+import deleteItem from '../../api/deleteItem';
+import fetchNames from '../../api/fetchNames';
 
-const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries}) => {
+const Delete = ({ setOpen, setSeverity, setMessage, setNames, names}) => {
   const [searchInput, setSearchInput] = useState('');
-  const [countryInfo, setCountryInfo] = useState(null); // Store country data
+  const [dataInfo, setDataInfo] = useState(null); // Store country data
 
   // delete pop-up stuff
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -36,7 +36,7 @@ const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries}) =>
   const handleDelete = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const response = await deleteCountryInfo(searchInput);
+    const response = await deleteItem(searchInput);
     let data = await response.json();
     setIsLoading(false);
     console.log(response)
@@ -48,17 +48,17 @@ const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries}) =>
     {
         setSeverity("success");
         setSearchInput(null);
-        setCountryInfo(null);
+        setDataInfo(null);
     }
     try
     {
-        let updatedCountriesNames = await fetchCountryNames();
-        console.log(updatedCountriesNames);
-        setCountries(updatedCountriesNames);
+        let newNames = await fetchNames();
+        console.log(newNames);
+        setNames(newNames);
     }
     catch(error)
     {
-        console.log("Error fetching new country names after delete, error: ", error);
+        console.log("Error fetching new names after delete, error: ", error);
     }
     setMessage(data.message);
     setOpen(true);
@@ -68,9 +68,21 @@ const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries}) =>
   // other
   const handleSearch = async () => {
     //TODO: add error handling
-    const result = await fetchCountryInfo({countryName: searchInput})
-    setCountryInfo(result);
+    const result = await fetchInfo({name: searchInput})
+    setDataInfo(result);
   };
+
+  // for rendering items about to be deleted
+  const listItems = [
+    { key: 'testingSite', label: 'Testing Site' },
+    { key: 'orderingInstructions', label: 'Ordering Instructions' },
+    { key: 'container', label: 'Container' },
+    { key: 'collectionInstructions', label: 'Collection Instructions' },
+    { key: 'frequency', label: 'Frequency' },
+    { key: 'TAT', label: 'TAT' },
+    { key: 'stabilityForAddOn', label: 'Stability for Add on Test' },
+    { key: 'externalLink', label: 'External Link' },
+  ];
 
     // how to indicate loading
     const [isLoading, setIsLoading] = useState(false);
@@ -86,8 +98,8 @@ const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries}) =>
             <Grid item xs={10}>
             <Autocomplete
                 ListboxProps={{ style: { maxHeight: 200, overflow: 'auto' } }}
-                id="country-search"
-                options={countries}
+                id="data-search"
+                options={names}
                 value={searchInput}
                 onChange={(event, newValue) => {
                 setSearchInput(newValue);
@@ -95,7 +107,7 @@ const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries}) =>
                 renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="Search for a Country"
+                    label="Search Item"
                     variant="outlined"
                 />
                 )}
@@ -107,35 +119,28 @@ const Delete = ({ setOpen, setSeverity, setMessage, setCountries, countries}) =>
             </Button>
             </Grid>
         </Grid>
-        {countryInfo && (
+        {dataInfo && (
             <>
                 <Grid container>
-                    <Grid style={{border: "2px solid"}} item xs={12} sm={6}>
-                        <CardMedia
-                        component="img"
-                        height="377"
-                        alt="Country Flag"
-                        src={countryInfo.image ? countryInfo.image : noImage}
-                        />
+                    <Grid item xs={12} sm={6}>
+                        <div style={{ maxHeight: '350px', overflowY: 'auto' }}>
+                            <img src={dataInfo.image ? dataInfo.image : noImage} alt="Lab Image" style={{ maxWidth: '100%' }} />
+                        </div>
                     </Grid>
-                    <Grid style={{paddingLeft: "10px"}} item xs={12} sm={6}>
-                        <Typography variant="h5">{countryInfo?.country}</Typography>
+                    <Grid item xs={12} sm={6}>
                         <List>
-                            <ListItem>
-                            <ListItemText primary="Founded" secondary={countryInfo?.founded}/>
-                            </ListItem>
-                            <Divider />
-                            <ListItem>
-                            <ListItemText primary="Population" secondary={countryInfo?.population}/>
-                            </ListItem>
-                            <Divider />
-                            <ListItem>
-                            <ListItemText primary="Political" secondary={countryInfo?.political}/>
-                            </ListItem>
-                            <Divider />
-                            <ListItem>
-                            <ListItemText primary="Currency" secondary={countryInfo?.currency}/>
-                            </ListItem>
+                            <div style={{ maxHeight: '350px', overflowY: 'auto' }}>
+                                {listItems.map((item, index) => (
+                                dataInfo?.[item.key] && (
+                                    <React.Fragment key={index}>
+                                    <ListItem>
+                                        <ListItemText primary={item.label} secondary={dataInfo?.[item.key]} />
+                                    </ListItem>
+                                    {index !== listItems.length - 1 && <Divider />}
+                                    </React.Fragment>
+                                )
+                                ))}
+                            </div>
                         </List>
                     </Grid>
                 </Grid>

@@ -1,26 +1,42 @@
 import React from 'react';
-import { Typography, Container, Paper, Divider } from '@mui/material';
+import { Typography, Container, Divider, Link, Grid } from '@mui/material';
 import './styles.css'; // Import your custom CSS styles
 
 const HomePage = () => {
   return (
     <Container maxWidth="md">
-      <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
-        <Typography variant="h4" className="title-home" gutterBottom>
-          Welcome to Vikan Demo
+        <Typography align='center' variant="h2" gutterBottom>
+          Lab Database Demo
         </Typography>
-        <Divider className="divider-home" />
-        <Typography variant="body1">
-          This Web App displays a simple solution to lookup, upload, update, and delete data using various countries' data as a simple example.
+        <Divider />
+        <Typography variant="h4" align='center' gutterBottom>
+          We hope you enjoy exploring the capabilities of this software.
         </Typography>
-        <Typography variant="body1">
-          When exploring and playing around with the application's features, try to envision what your use case would be, and we can bring that to life!
+        <Typography variant="h5" align='center' gutterBottom>
+          Check our links out:
         </Typography>
-        <Typography variant="body1">
-          At Vikan, we are dedicated to providing a simple, yet elegant software solution for your day-to-day problems.
-        </Typography>
-        <Divider className="divider-home" />
-      </Paper>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={10}>
+            <Link
+                href={"https://www.linkedin.com/in/kian-karbasy-95173820a/"}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'blue', cursor: 'pointer' }}
+                >
+                LinkedIn
+            </Link>
+          </Grid>
+          <Grid item xs={2}>
+            <Link
+                href={"https://github.com/duble-k"}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'blue', cursor: 'pointer' }}
+                >
+                Github
+            </Link>
+          </Grid>
+        </Grid>
     </Container>
   );
 };
