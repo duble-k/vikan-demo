@@ -30,17 +30,6 @@ const NavBar = () => {
       await fetchDeleteCookie();
       updateSessionData({ isAdmin: false, hasCookie: false });
     }
-
-    const hasAccess = await document.hasStorageAccess();
-    
-    if(!hasAccess) {
-      try {
-        await document.requestStorageAccess();
-      } catch (error) {
-        console.error("Error requesting storage access:", error);
-        throw new Error("Failed to request storage access.");
-      }
-    };
   };
 
   return (
