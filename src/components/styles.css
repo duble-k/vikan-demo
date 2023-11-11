@@ -10,12 +10,3 @@
   font-weight: bold; /* Make it bold */
   margin-bottom: 10px; /* Add some space at the bottom */
 }
-
-.divider-home {
-  margin-top: 10px; /* Add space above the divider */
-  margin-bottom: 100px; /* Add more space below the divider */
-  background-color: #1976D2; /* Your desired color */
-  height: 4px; /* Set the height of the divider */
-  margin-left: auto; /* Align to the right */
-  margin-right: auto; /* Align to the left */
-}

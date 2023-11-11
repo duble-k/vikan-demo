@@ -1,4 +1,4 @@
-const fetchCountryNames = async () => {
+const fetchNames = async () => {
   try {
     const response = await fetch(
       `${process.env.REACT_APP_serverUrl}/api/names`,
@@ -15,11 +15,11 @@ const fetchCountryNames = async () => {
     }
 
     const data = await response.json();
-    return data.countries;
+    return data.names;
   } catch (error) {
     console.error("Error fetching country names:", error);
     throw error; // Re-throw the error to be caught higher up the call stack
   }
 };
 
-export default fetchCountryNames;
+export default fetchNames;

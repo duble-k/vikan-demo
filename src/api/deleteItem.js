@@ -1,4 +1,4 @@
-const deleteCountryInfo = async (country) => {
+const deleteItem = async (name) => {
   try {
     const response = await fetch(
       `${process.env.REACT_APP_serverUrl}/api/delete`,
@@ -8,7 +8,7 @@ const deleteCountryInfo = async (country) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ country }), // Send the uniqueKey in the request body as JSON
+        body: JSON.stringify({ name }), // Send the uniqueKey in the request body as JSON
       }
     );
 
@@ -19,4 +19,4 @@ const deleteCountryInfo = async (country) => {
   }
 };
 
-export default deleteCountryInfo;
+export default deleteItem;

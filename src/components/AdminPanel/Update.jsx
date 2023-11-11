@@ -8,18 +8,22 @@ import {
   Autocomplete,
   Grid,
 } from "@mui/material";
-import updateCountryInfo from "../../api/updateCountryInfo";
-import fetchCountryInfo from "../../api/fetchCountryInfo";
+import updateInfo from "../../api/updateInfo";
+import fetchInfo from "../../api/fetchInfo";
 
-const Update = ({ setOpen, setSeverity, setMessage, countries }) => {
+const Update = ({ setOpen, setSeverity, setMessage, names }) => {
   const [searchInput, setSearchInput] = useState("");
   const [formData, setFormData] = useState({
-    country: "",
-    founded: "",
-    population: "",
-    political: "",
-    currency: "",
-    image: "",
+    name: "", 
+    testingSite: "", 
+    orderingInstructions: "",
+    container: "",
+    collectionInstructions: "",
+    frequency: "",
+    TAT: "",
+    stabilityForAddOn: "",
+    externalLink: "",
+    image: "" 
   });
 
   const [imageData, setImageData] = useState(""); // Store the base64 encoded image data
@@ -27,7 +31,7 @@ const Update = ({ setOpen, setSeverity, setMessage, countries }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = async () => {
-    const result = await fetchCountryInfo({ countryName: searchInput });
+    const result = await fetchInfo({ name: searchInput });
     setFormData(result);
   };
 
@@ -48,7 +52,7 @@ const Update = ({ setOpen, setSeverity, setMessage, countries }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const response = await updateCountryInfo({
+    const response = await updateInfo({
       ...formData,
       image: imageData ? imageData : formData.image,
     });
@@ -60,12 +64,16 @@ const Update = ({ setOpen, setSeverity, setMessage, countries }) => {
     } else {
       setSeverity("success");
       setFormData({
-        country: "",
-        founded: "",
-        population: "",
-        political: "",
-        currency: "",
-        image: "",
+        name: "", 
+        testingSite: "", 
+        orderingInstructions: "",
+        container: "",
+        collectionInstructions: "",
+        frequency: "",
+        TAT: "",
+        stabilityForAddOn: "",
+        externalLink: "",
+        image: "" 
       });
       setImageData(null);
       setSearchInput(null);
@@ -89,8 +97,8 @@ const Update = ({ setOpen, setSeverity, setMessage, countries }) => {
         <Grid item xs={10}>
           <Autocomplete
             ListboxProps={{ style: { maxHeight: 200, overflow: "auto" } }}
-            id="country-search"
-            options={countries}
+            id="data-search"
+            options={names}
             value={searchInput}
             onChange={(event, newValue) => {
               setSearchInput(newValue);
@@ -98,7 +106,7 @@ const Update = ({ setOpen, setSeverity, setMessage, countries }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Search for a Country"
+                label="Search Lab Item"
                 variant="outlined"
               />
             )}
@@ -115,80 +123,123 @@ const Update = ({ setOpen, setSeverity, setMessage, countries }) => {
         </Grid>
       </Grid>
       <form onSubmit={handleSubmit}>
-        <div
-          style={{
-            paddingTop: "10px",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <label htmlFor="imagePicker" style={{ marginBottom: "8px" }}>
-            New Image (PNG or JPG)
-          </label>
-          <input
-            type="file"
-            id="imagePicker"
-            accept=".jpg, .jpeg, .png"
-            onChange={handleFileChange}
+        <div style={{ maxHeight: '350px', overflowY: 'auto' }}>
+          <div
+            style={{
+              paddingTop: "10px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <label htmlFor="imagePicker" style={{ marginBottom: "8px" }}>
+              Image (PNG or JPG)
+            </label>
+            <input
+              type="file"
+              id="imagePicker"
+              accept=".jpg, .jpeg, .png"
+              onChange={handleFileChange}
+            />
+          </div>
+          <TextField
+            label="Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.name}
+            onChange={(e) =>
+              setFormData({ ...formData, name: e.target.value })
+            }
+          />
+          <TextField
+            label="Testing Site"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.testingSite}
+            onChange={(e) =>
+              setFormData({ ...formData, testingSite: e.target.value })
+            }
+          />
+          <TextField
+            label="Ordering Instructions"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.orderingInstructions}
+            onChange={(e) =>
+              setFormData({ ...formData, orderingInstructions: e.target.value })
+            }
+          />
+          <TextField
+            label="Container"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.container}
+            onChange={(e) =>
+              setFormData({ ...formData, container: e.target.value })
+            }
+          />
+          <TextField
+            label="Collection Instructions"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.collectionInstructions}
+            onChange={(e) =>
+              setFormData({ ...formData, collectionInstructions: e.target.value })
+            }
+          />
+          <TextField
+            label="Frequency"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.frequency}
+            onChange={(e) =>
+              setFormData({ ...formData, frequency: e.target.value })
+            }
+          />
+          <TextField
+            label="TAT"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.TAT}
+            onChange={(e) =>
+              setFormData({ ...formData, TAT: e.target.value })
+            }
+          />
+          <TextField
+            label="Stability for Add on Test"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.stabilityForAddOn}
+            onChange={(e) =>
+              setFormData({ ...formData, stabilityForAddOn: e.target.value })
+            }
+          />
+          <TextField
+            label="External Reference Link"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.externalLink}
+            onChange={(e) =>
+              setFormData({ ...formData, externalLink: e.target.value })
+            }
           />
         </div>
-        <TextField
-          label="Country"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={formData.country}
-          onChange={(e) =>
-            setFormData({ ...formData, country: e.target.value })
-          }
-        />
-        <TextField
-          label="Population"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={formData.population}
-          onChange={(e) =>
-            setFormData({ ...formData, population: e.target.value })
-          }
-        />
-        <TextField
-          label="Currency"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={formData.currency}
-          onChange={(e) =>
-            setFormData({ ...formData, currency: e.target.value })
-          }
-        />
-        <TextField
-          label="Founded"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={formData.founded}
-          onChange={(e) =>
-            setFormData({ ...formData, founded: e.target.value })
-          }
-        />
-        <TextField
-          label="Political"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={formData.political}
-          onChange={(e) =>
-            setFormData({ ...formData, political: e.target.value })
-          }
-        />
         <Button
           disabled={
-            formData.country === "" || searchInput === "" || !searchInput
+            formData.name === "" || searchInput === "" || !searchInput
           }
           variant="contained"
           color="primary"
           type="submit"
+          style={{marginTop: "10px"}}
         >
           Update
         </Button>

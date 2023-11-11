@@ -5,26 +5,30 @@ import {
   Container,
   Paper,
   Tab,
-  Tabs,
-  Typography,
+  Tabs
 } from "@mui/material";
 import Create from "./AdminPanel/Create";
 import Update from "./AdminPanel/Update";
 import Delete from "./AdminPanel/Delete";
 import FileUploader from "./AdminPanel/FileUploader";
 import MessageBanner from "./MessageBanner";
-import fetchCountryNames from "../api/fetchCountryNames";
+import fetchNames from "../api/fetchNames";
+// icons
+import CreateIcon from '@mui/icons-material/Create';
+import UpdateIcon from '@mui/icons-material/Update';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const Admin = () => {
   const [value, setValue] = useState(0); // To control the selected tab
-  const [countries, setCountries] = useState([]);
+  const [names, setNames] = useState([]);
 
   // message banner state
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("success"); // 'success' or 'error'
 
-  const handleChange = (event, newValue) => {
+  const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
@@ -36,10 +40,10 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    // Make a GET request to your server's /api/countries route
+    // Make a GET request to your server's /api/names route
     const getNames = async () => {
-      let countryNames = await fetchCountryNames();
-      setCountries(countryNames);
+      let dataNames = await fetchNames();
+      setNames(dataNames);
     };
     getNames();
   }, []); // The empty dependency array ensures this runs only once on component mount
@@ -52,22 +56,14 @@ const Admin = () => {
         severity={severity}
         onClose={handleCloseBanner}
       />
-      <Typography
-        style={{ paddingTop: "20px" }}
-        variant="h5"
-        align="center"
-        gutterBottom
-      >
-        Admin Operations
-      </Typography>
       <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
         <AppBar position="static" color="default">
-          <Tabs value={value} onChange={handleChange} centered>
-            <Tab label="Create" />
-            <Tab label="Update" />
-            <Tab label="Delete" />
-            <Tab label="File Upload" />
-          </Tabs>
+        <Tabs value={value} onChange={handleTabChange} centered>
+          <Tab label="Create" icon={<CreateIcon />} />
+          <Tab label="Update" icon={<UpdateIcon />} />
+          <Tab label="Delete" icon={<DeleteIcon />} />
+          <Tab label="File Upload" icon={<CloudUploadIcon />} />
+        </Tabs>
         </AppBar>
         <Box p={3}>
           {value === 0 && (
@@ -75,7 +71,7 @@ const Admin = () => {
               setOpen={setOpen}
               setSeverity={setSeverity}
               setMessage={setMessage}
-              setCountries={setCountries}
+              setNames={setNames}
             />
           )}{" "}
           {/* Render the Create component when the "Create" tab is selected */}
@@ -84,7 +80,7 @@ const Admin = () => {
               setOpen={setOpen}
               setSeverity={setSeverity}
               setMessage={setMessage}
-              countries={countries}
+              names={names}
             />
           )}{" "}
           {/* Render the Update component when the "Update" tab is selected */}
@@ -93,8 +89,8 @@ const Admin = () => {
               setOpen={setOpen}
               setSeverity={setSeverity}
               setMessage={setMessage}
-              setCountries={setCountries}
-              countries={countries}
+              setNames={setNames}
+              names={names}
             />
           )}{" "}
           {/* Render the Delete component when the "Delete" tab is selected */}
@@ -103,7 +99,7 @@ const Admin = () => {
               setOpen={setOpen}
               setSeverity={setSeverity}
               setMessage={setMessage}
-              countries={countries}
+              names={names}
             />
           )}
         </Box>

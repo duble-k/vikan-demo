@@ -1,4 +1,4 @@
-const fetchCountryInfo = async (input) => {
+const fetchInfo = async (input) => {
   try {
     const response = await fetch(
       `${process.env.REACT_APP_serverUrl}/api/receive`,
@@ -26,4 +26,4 @@ const fetchCountryInfo = async (input) => {
   }
 };
 
-export default fetchCountryInfo;
+export default fetchInfo;

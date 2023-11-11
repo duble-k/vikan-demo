@@ -13,6 +13,7 @@ import {
   Search as SearchIcon,
   Person as PersonIcon,
   Dashboard as DashboardIcon,
+  Biotech as BiotechIcon
 } from "@mui/icons-material";
 import "./styles.css";
 import fetchDeleteCookie from "../api/fetchDeleteCookie";
@@ -34,7 +35,8 @@ const NavBar = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6">Vikan Demo</Typography>
+        <BiotechIcon sx={{ fontSize: 30, marginRight: 1 }} />
+        <Typography variant="h6">Lab Demo</Typography>
 
         <Divider
           orientation="vertical"
