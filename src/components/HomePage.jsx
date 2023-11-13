@@ -19,7 +19,7 @@ const HomePage = () => {
         <Typography variant="h5" sx={{ mb: 2 }}>
           Connect with us:
         </Typography>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
           <Link
             href={"https://www.linkedin.com/in/kian-karbasy-95173820a/"}
             target="_blank"
@@ -36,6 +36,17 @@ const HomePage = () => {
           >
             Github
           </Link>
+          <Typography variant="body1" style={{ color: 'black' }}>
+            If you came here using the vikan-demo URL, try our custom domain:&nbsp;
+            <Link
+              href={"https://www.weeelab.com"}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'blue', cursor: 'pointer', textDecoration: 'none' }}
+            >
+              weeelab.com
+            </Link>
+          </Typography>
         </div>
       </Box>
     </Container>
@@ -43,3 +54,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
