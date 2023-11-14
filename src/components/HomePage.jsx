@@ -36,16 +36,8 @@ const HomePage = () => {
           >
             Github
           </Link>
-          <Typography variant="body1" style={{ color: 'black' }}>
-            If you came here using the vikan-demo URL, try our custom domain:&nbsp;
-            <Link
-              href={"https://www.weeelab.com"}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: 'blue', cursor: 'pointer', textDecoration: 'none' }}
-            >
-              weeelab.com
-            </Link>
+          <Typography variant="body1" style={{ color: 'red' }}>
+            *If you attempted to reach this site using the vikan-demo URL, you have been redirected here instead on purpose&nbsp;
           </Typography>
         </div>
       </Box>
