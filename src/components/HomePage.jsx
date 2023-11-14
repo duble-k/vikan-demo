@@ -37,7 +37,7 @@ const HomePage = () => {
             Github
           </Link>
           <Typography variant="body1" style={{ color: 'red' }}>
-            *If you attempted to reach this site using the vikan-demo URL, you have been redirected here instead on purpose&nbsp;
+            *If you attempted to reach this site using the vikan-demo URL, you have been redirected here instead on purpose.&nbsp;
           </Typography>
         </div>
       </Box>
