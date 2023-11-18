@@ -9,7 +9,8 @@ import {
   Box,
   Paper,
   Tab,
-  Tabs
+  Tabs,
+  CircularProgress
 } from "@mui/material";
 // child components
 import LabInformation from "./Lookup/LabInformation";
@@ -31,6 +32,8 @@ const Lookup = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("success"); // 'success' or 'error'
+  // loading pop-up state
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTabChange = (event, newTabValue) => {
     setTabValue(newTabValue);
@@ -53,9 +56,29 @@ const Lookup = () => {
   }, []); // The empty dependency array ensures this runs only once on component mount
 
   const handleSearch = async () => {
+    // TODO: can move this to server side if information set becomes too large
+    // Check if the current search input value is in the list of names
+    if (!names.includes(searchInput)) {
+      // Display an error message (you can customize this message)
+      setOpen(true);
+      setMessage("Invalid search input. Please select a valid option from the list.");
+      setSeverity("warning");
+      return;
+    }
     //TODO: add error handling
+    setIsLoading(true);
     const result = await fetchInfo({ name: searchInput });
+    setIsLoading(false);
     setResult(result);
+  };
+
+  const handleAutocompleteKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      // Prevent the default behavior of the Enter key (form submission)
+      event.preventDefault();
+      // Trigger the search action
+      handleSearch();
+    }
   };
 
   return (
@@ -73,7 +96,7 @@ const Lookup = () => {
         alignItems="center"
         justifyContent="center" // Center the content vertically
       >
-        <Grid item xs={10}>
+        <Grid item xs={9}>
           {/* Autocomplete search input */}
           <Autocomplete
             ListboxProps={{ style: { maxHeight: 200, overflow: "auto" } }}
@@ -88,6 +111,7 @@ const Lookup = () => {
                 {...params}
                 label="Search Lab Item"
                 variant="outlined"
+                onKeyDown={handleAutocompleteKeyDown}
               />
             )}
           />
@@ -97,6 +121,14 @@ const Lookup = () => {
           <Button variant="outlined" onClick={handleSearch}>
             Search
           </Button>
+        </Grid>
+        <Grid item xs={1}>
+          {/* Added if server takes too long to respond */}
+          {isLoading && (
+              <div style={{ display: "flex" }}>
+                <CircularProgress size={20} style={{ marginLeft: 10 }} />
+              </div>
+          )}
         </Grid>
       </Grid>
       {result && (
@@ -113,11 +145,13 @@ const Lookup = () => {
                 result={ result }
               />
             )}{" "}
-            {/* Render the Create component when the "Create" tab is selected */}
             {tabValue === 1 && (
               <FormsList
                 name={ result.name }
                 associatedPdfs={ result.associatedPdfs }
+                setOpen={setOpen}
+                setMessage={setMessage}
+                setSeverity={setSeverity}
               />
             )}{" "}
           </Box>
